@@ -1,9 +1,9 @@
 import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import React from 'react'
-import { Link } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 const AddMovie = () => {
-
+    const navigate = useNavigate();
     const [addData, setAddData] = React.useState({
         movieName: '',
         director: '',
@@ -14,7 +14,7 @@ const AddMovie = () => {
 
     const HandleForm = async (e) => {
         e.preventDefault()
-        console.log(addData)
+        // console.log(addData)
 
         try {
             const token = localStorage.getItem('Tokens')
@@ -23,13 +23,22 @@ const AddMovie = () => {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
-                    'Authorization':`${token}`
+                    'Authorization': `${token}`
                 },
                 body: JSON.stringify(addData)
             })
 
             const result = await res.json();
-            console.log(result);
+            // console.log(result);
+            const { success, message, error } = result;
+            if (success) {
+                toast.success(message)
+                navigate('/main')
+            } else if (error) {
+                toast.error(error.details[0].message)
+            } else if (!success) {
+                toast.error(message);
+            }
         } catch (error) {
             console.log(error)
         }
@@ -114,7 +123,7 @@ const AddMovie = () => {
 
                     </form>
 
-                   
+
                 </Paper>
 
             </Box>
