@@ -41,9 +41,9 @@ const Main = () => {
     if (debounceTimer) clearTimeout(debounceTimer);
 
     const timer = setTimeout(() => {
-      setPage(1); // reset to page 1 on new search
+      setPage(1); 
       fetchMoviesInPage(1, search,sortBy,order);
-    }, 500); // 500ms debounce
+    }, 500); 
 
     setDebounceTimer(timer);
 
