@@ -14,7 +14,7 @@ const AddMovie = () => {
 
     const HandleForm = async (e) => {
         e.preventDefault()
-        console.log(addData)
+        // console.log(addData)
 
         try {
             const token = localStorage.getItem('Tokens')
@@ -35,7 +35,7 @@ const AddMovie = () => {
             })
 
             const result = await res.json();
-            console.log(result);
+            // console.log(result);
 
             const { success, message, error } = result;
             if (success) {
