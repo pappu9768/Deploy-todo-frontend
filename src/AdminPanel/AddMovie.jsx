@@ -14,7 +14,7 @@ const AddMovie = () => {
 
     const HandleForm = async (e) => {
         e.preventDefault()
-        // console.log(addData)
+        console.log(addData)
 
         try {
             const token = localStorage.getItem('Tokens')
@@ -23,13 +23,20 @@ const AddMovie = () => {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
-                    'Authorization': `${token}`
+                    'authorization': `${token}`
                 },
-                body: JSON.stringify(addData)
+                body: JSON.stringify({
+                    title: addData.movieName,
+                    director: addData.director,
+                    year: addData.release,
+                    cast: addData.cast,
+                    rating: addData.rating
+                })
             })
 
             const result = await res.json();
-            // console.log(result);
+            console.log(result);
+
             const { success, message, error } = result;
             if (success) {
                 toast.success(message)
