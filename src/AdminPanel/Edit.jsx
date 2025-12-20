@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Box, TextField, Paper, Typography, Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useParams, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 
 const Edit = () => {
@@ -69,7 +70,17 @@ const Edit = () => {
       })
       const resultant = await res.json();
       // console.log(resultant);
-      navigate('/main')
+      const {success,message,error} = resultant
+      
+      if(success){
+        toast.success(message);
+        navigate('/main')
+      } else if(error){
+        toast.error(error?.details[0].message)
+      } else if(!success){
+        toast.error(message);
+      }
+
     } catch (error) {
       console.log(error)
     }
